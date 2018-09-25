@@ -32,9 +32,9 @@ namespace abcNotation {
      * @param melodyArray the melody array to play
      * @param options melody options, once / forever, in the foreground / background
      */
-    //% help=music/begin-melody weight=60 blockGap=8
-    //% blockId=device_start_melody block="start melody %melody=device_builtin_melody| repeating %options"
-    //% parts="headphone"
+    //% weight=60 blockGap=8
+    //% blockId=device_play_notes block="play notes %melody=device_builtin_melody"
+    //    //% parts="headphone"
     export function beginMelody(melodyArray: string[], options: MelodyOptions = 1) {
         init();
         if (currentMelody != undefined) {
@@ -157,11 +157,4 @@ namespace abcNotation {
             return currentNote;
         }
     }
-
-    //% blockId=play_notes block="play notes %v"
-    export function playNotes(text: string): void {
-        pins.analogPitch(262, 100)
-    }
-
-
 }
