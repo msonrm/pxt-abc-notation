@@ -7,6 +7,4 @@ namespace abcNotation {
     }
 
 
-    }
-
 }
