@@ -14,6 +14,95 @@ namespace abcNotation {
     let currentBackgroundMelody: Melody;
     let melodyArray: string[] = [];
 
+    enum Key {
+        //% block="C"
+        C = 1,
+        //% block="G"
+        G = 2,
+        //% block="D"
+        D = 3,
+        //% block="A"
+        A = 4,
+        //% block="E"
+        E = 5,
+        //% block="B"
+        B = 6,
+        //% block="F#"
+        FSharp = 7,
+        //% block="C#"
+        CSharp = 8,
+        //% block="F"
+        F = 9,
+        //% block="Bb"
+        BFlat = 10,
+        //% block="Eb"
+        EFlat = 11,
+        //% block="Ab"
+        AFlat = 12,
+        //% block="Db"
+        DFlat = 13,
+        //% block="Gb"
+        GFlat = 14,
+        //% block="Cb"
+        CFlat = 15,
+        //% block="Am"
+        Am = 1,
+        //% block="Em"
+        Em = 2,
+        //% block="Bm"
+        Bm = 3,
+        //% block="F#m"
+        FSharpM = 4,
+        //% block="C#m"
+        CSharpM = 5,
+        //% block="G#m"
+        GSharpM = 6,
+        //% block="D#m"
+        DSharpM = 7,
+        //% block="A#m"
+        ASharpM = 8,
+        //% block="Dm"
+        Dm = 9,
+        //% block="Gm"
+        Gm = 10,
+        //% block="Cm"
+        Cm = 11,
+        //% block="Fm"
+        Fm = 12,
+        //% block="Bbm"
+        BFlatM = 13,
+        //% block="Ebm"
+        EFlatM = 14,
+        //% block="Abm"
+        AFlatM = 15,
+    }
+
+    /**
+     * Sets the key
+     */
+    //% weight=50
+    //% blockId=device_set_key block="set key (K:) to |%keyName"
+    export function key(keyName?: Key): void {
+        init()
+        if (keyName == null) keyName = Key.C;
+        switch (keyName) {
+            case Key.C: case Key.Am:
+            case Key.G: case Key.Em:
+            case Key.D: case Key.Bm:
+            case Key.A: case Key.FSharpM:
+            case Key.E: case Key.CSharpM:
+            case Key.B: case Key.GSharpM:
+            case Key.FSharp: case Key.DSharpM:
+            case Key.CSharp: case Key.ASharpM:
+            case Key.F: case Key.Dm:
+            case Key.BFlat: case Key.Gm:
+            case Key.EFlat: case Key.Cm:
+            case Key.AFlat: case Key.Fm:
+            case Key.DFlat: case Key.BFlatM:
+            case Key.GFlat: case Key.EFlatM:
+            case Key.CFlat: case Key.AFlatM:
+        }
+    }
 
     /**
      * Play notes.
