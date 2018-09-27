@@ -82,7 +82,7 @@ namespace abcNotation {
      */
     //% weight=50
     //% blockId=device_set_key block="set key (K:) to |%keyName"
-    export function key(keyName?: Key): void {
+    export function setKey(keyName?: Key): void {
         init()
         if (keyName == null) keyName = Key.C;
         switch (keyName) {
