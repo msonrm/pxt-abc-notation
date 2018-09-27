@@ -12,20 +12,21 @@ namespace abcNotation {
 
     let currentMelody: Melody;
     let currentBackgroundMelody: Melody;
-    let melodyArray: string[]
+    let melodyArray: string[] = [];
+
 
     /**
      * Play notes.
-     * Notes are expressed as a string of characters with this format: NOTE[octave][:duration]
+     * Notes are expressed as a string of characters with ABC notation
      * @param melodyNotes the melody notes to play
      */
     //% weight=60
-    //% blockId=device_play_notes block="play notes %notes"
+    //% blockId=device_play_notes block="play notes %string"
     export function playNotes(melodyNotes: string, options: MelodyOptions = 1) {
         init();
+
+        // write function here (notes to melodyArray)
         melodyArray = ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f', 'd:8'];
-
-
 
         if (currentMelody != undefined) {
             if (((options & MelodyOptions.OnceInBackground) == 0)
@@ -59,6 +60,7 @@ namespace abcNotation {
             })
         }
     }
+
 
     /**
     * Sets a custom playTone function for playing notes
