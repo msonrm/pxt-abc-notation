@@ -77,17 +77,21 @@ namespace abcNotation {
         AFlatM = 15,
     }
 
+
+
+
+
     /**
      * Sets the key
      */
     //% weight=50
-    //% blockId=device_set_key block="set key (K:) to |%keyName"
-    export function setKey(keyName: Key): void {
+    //% blockId=device_set_key block="set key (K:) |%value"
+    export function setKey(value: Key): void {
         init()
-        if (keyName == null) keyName = Key.C;
-        switch (keyName) {
+        if (value == null) value = Key.C;
+        switch (value) {
             case Key.C: case Key.Am:
-            case Key.G: case Key.Em:
+            case Key.G: case Key.Em: led.plot(3, 3);
             case Key.D: case Key.Bm:
             case Key.A: case Key.FSharpM:
             case Key.E: case Key.CSharpM:
