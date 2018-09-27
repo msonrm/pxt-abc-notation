@@ -12,31 +12,21 @@ namespace abcNotation {
 
     let currentMelody: Melody;
     let currentBackgroundMelody: Melody;
+    let melodyArray: string[]
 
     /**
-     * Gets the melody array of a built-in melody.
-     * @param name the note name, eg: Note.C
-     */
-    //% weight=50 help=music/builtin-melody
-    //% blockId=device_builtin_melody block="%melody"
-    //% blockHidden=true
-    export function builtInMelody(melody: Melodies): string[] {
-        return ['r4:2', 'g', 'g', 'g', 'eb:8', 'r:2', 'f', 'f', 'f', 'd:8'];
-    }
-
-
-
-    /**
-     * Starts playing a melody.
+     * Play notes.
      * Notes are expressed as a string of characters with this format: NOTE[octave][:duration]
-     * @param melodyArray the melody array to play
-     * @param options melody options, once / forever, in the foreground / background
+     * @param melodyNotes the melody notes to play
      */
-    //% weight=60 blockGap=8
-    //% blockId=device_play_notes block="play notes %melody=device_builtin_melody"
-    //    //% parts="headphone"
-    export function beginMelody(melodyArray: string[], options: MelodyOptions = 1) {
+    //% weight=60
+    //% blockId=device_play_notes block="play notes %notes"
+    export function playNotes(melodyNotes: string, options: MelodyOptions = 1) {
         init();
+        melodyArray = ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f', 'd:8'];
+
+
+
         if (currentMelody != undefined) {
             if (((options & MelodyOptions.OnceInBackground) == 0)
                 && ((options & MelodyOptions.ForeverInBackground) == 0)
@@ -71,9 +61,8 @@ namespace abcNotation {
     }
 
     /**
-        * Sets a custom playTone function for playing melodies
-        */
-    //% help=music/set-play-tone
+    * Sets a custom playTone function for playing notes
+    */
     //% advanced=true
     export function setPlayTone(f: (frequency: number, duration: number) => void) {
         _playTone = f;
