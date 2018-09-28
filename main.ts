@@ -87,26 +87,26 @@ namespace abcNotation {
     //% weight=50
     //% blockId=device_set_key
     //% block
-    export function setKey(value: Key) {
+    export function setKey(value: Key): number {
         init();
         if (value == null) value = Key.C;
         switch (value) {
-            case Key.C: case Key.Am:
+            case Key.C: case Key.Am: return null;
             case Key.G: case Key.Em: led.plot(3, 3);
-            case Key.D: case Key.Bm:
-            case Key.A: case Key.FSharpM:
-            case Key.E: case Key.CSharpM:
-            case Key.B: case Key.GSharpM:
-            case Key.FSharp: case Key.DSharpM:
-            case Key.CSharp: case Key.ASharpM:
-            case Key.F: case Key.Dm:
-            case Key.BFlat: case Key.Gm:
-            case Key.EFlat: case Key.Cm:
-            case Key.AFlat: case Key.Fm:
-            case Key.DFlat: case Key.BFlatM:
-            case Key.GFlat: case Key.EFlatM:
-            case Key.CFlat: case Key.AFlatM:
-            default:
+            case Key.D: case Key.Bm: return null;
+            case Key.A: case Key.FSharpM: return null;
+            case Key.E: case Key.CSharpM: return null;
+            case Key.B: case Key.GSharpM: return null;
+            case Key.FSharp: case Key.DSharpM: return null;
+            case Key.CSharp: case Key.ASharpM: return null;
+            case Key.F: case Key.Dm: return null;
+            case Key.BFlat: case Key.Gm: return null;
+            case Key.EFlat: case Key.Cm: return null;
+            case Key.AFlat: case Key.Fm: return null;
+            case Key.DFlat: case Key.BFlatM: return null;
+            case Key.GFlat: case Key.EFlatM: return null;
+            case Key.CFlat: case Key.AFlatM: return null;
+            default: return null;
         }
     }
 
