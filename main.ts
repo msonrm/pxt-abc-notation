@@ -87,7 +87,7 @@ namespace abcNotation {
     //% weight=50
     //% blockId=device_set_key block="set key (K:) %value"
     export function setKey(value: Key): void {
-        init()
+        init();
         if (value == null) value = Key.C;
         switch (value) {
             case Key.C: case Key.Am:
