@@ -91,22 +91,22 @@ namespace abcNotation {
         init();
         if (value == null) value = Key.C;
         switch (value) {
-            case Key.C: case Key.Am: return null;
-            case Key.G: case Key.Em: led.plot(3, 3);
-            case Key.D: case Key.Bm: return null;
-            case Key.A: case Key.FSharpM: return null;
-            case Key.E: case Key.CSharpM: return null;
-            case Key.B: case Key.GSharpM: return null;
-            case Key.FSharp: case Key.DSharpM: return null;
-            case Key.CSharp: case Key.ASharpM: return null;
-            case Key.F: case Key.Dm: return null;
-            case Key.BFlat: case Key.Gm: return null;
-            case Key.EFlat: case Key.Cm: return null;
-            case Key.AFlat: case Key.Fm: return null;
-            case Key.DFlat: case Key.BFlatM: return null;
-            case Key.GFlat: case Key.EFlatM: return null;
-            case Key.CFlat: case Key.AFlatM: return null;
-            default: return null;
+            case Key.C: case Key.Am: return 1;
+            case Key.G: case Key.Em: return 2;
+            case Key.D: case Key.Bm: return 3;
+            case Key.A: case Key.FSharpM: return 4;
+            case Key.E: case Key.CSharpM: return 5;
+            case Key.B: case Key.GSharpM: return 6;
+            case Key.FSharp: case Key.DSharpM: return 7;
+            case Key.CSharp: case Key.ASharpM: return 8;
+            case Key.F: case Key.Dm: return 9;
+            case Key.BFlat: case Key.Gm: return 10;
+            case Key.EFlat: case Key.Cm: return 11;
+            case Key.AFlat: case Key.Fm: return 12;
+            case Key.DFlat: case Key.BFlatM: return 13;
+            case Key.GFlat: case Key.EFlatM: return 14;
+            case Key.CFlat: case Key.AFlatM: return 15;
+            default: return 0;
         }
     }
 
