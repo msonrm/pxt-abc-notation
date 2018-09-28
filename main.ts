@@ -85,7 +85,8 @@ namespace abcNotation {
      * Sets the key
      */
     //% weight=50
-    //% blockId=device_set_key block
+    //% blockId=device_set_key
+    //% block
     export function setKey(value: Key): void {
         init();
         if (value == null) value = Key.C;
