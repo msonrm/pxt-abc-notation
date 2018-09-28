@@ -1,6 +1,7 @@
 //% weight=70 icon="\uf001" color=#ffa500 block="ABC notation"
 namespace abcNotation {
     let beatsPerMinute: number = 120;
+    let currentKey: number = 1;
     let freqTable: number[] = [];
     let _playTone: (frequency: number, duration: number) => void;
     const MICROBIT_MELODY_ID = 2000;
@@ -80,13 +81,12 @@ namespace abcNotation {
 
 
 
-
     /**
      * Sets the key
      */
     //% weight=50
-    //% blockId=device_set_key block="set key (K:) |%value"
-    export function setKey(value: Key = Key.C): void {
+    //% blockId=device_set_key block="set key (K:) %value"
+    export function setKey(value: Key): void {
         init()
         if (value == null) value = Key.C;
         switch (value) {
