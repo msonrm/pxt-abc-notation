@@ -87,7 +87,7 @@ namespace abcNotation {
     //% weight=50
     //% blockId=device_set_key
     //% block
-    export function setKey(value: Key): void {
+    export function setKey(value: Key) {
         init();
         if (value == null) value = Key.C;
         switch (value) {
@@ -106,6 +106,7 @@ namespace abcNotation {
             case Key.DFlat: case Key.BFlatM:
             case Key.GFlat: case Key.EFlatM:
             case Key.CFlat: case Key.AFlatM:
+            default:
         }
     }
 
