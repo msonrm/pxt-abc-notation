@@ -1,9 +1,10 @@
 //% weight=70 icon="\uf001" color=#ffa500 block="ABC notation"
 namespace abcNotation {
+    let unitNote: number = 1 / 8;
+    let beatNote: number = 1 / 4;
     let beatsPerMinute: number = 120;
-    let currentKey: number = 1;
+    let key: number[] = [];
     let freqTable: number[] = [];
-    let _playTone: (frequency: number, duration: number) => void;
     const MICROBIT_MELODY_ID = 2000;
 
     function init() {
@@ -79,35 +80,52 @@ namespace abcNotation {
     }
 
 
-
-
     /**
      * Sets the key
      */
     //% weight=50
     //% blockId=device_set_key
     //% block
-    export function setKey(value: Key): number {
-        init();
-        if (value == null) value = Key.C;
-        switch (value) {
-            case Key.C: case Key.Am: return 1;
-            case Key.G: case Key.Em: return 2;
-            case Key.D: case Key.Bm: return 3;
-            case Key.A: case Key.FSharpM: return 4;
-            case Key.E: case Key.CSharpM: return 5;
-            case Key.B: case Key.GSharpM: return 6;
-            case Key.FSharp: case Key.DSharpM: return 7;
-            case Key.CSharp: case Key.ASharpM: return 8;
-            case Key.F: case Key.Dm: return 9;
-            case Key.BFlat: case Key.Gm: return 10;
-            case Key.EFlat: case Key.Cm: return 11;
-            case Key.AFlat: case Key.Fm: return 12;
-            case Key.DFlat: case Key.BFlatM: return 13;
-            case Key.GFlat: case Key.EFlatM: return 14;
-            case Key.CFlat: case Key.AFlatM: return 15;
-            default: return 0;
+    /*     export function setKey(value: Key): number {
+            init();
+            if (value == null) value = Key.C;
+            switch (value) {
+                case Key.C: case Key.Am: return 1;
+                case Key.G: case Key.Em: return 2;
+                case Key.D: case Key.Bm: return 3;
+                case Key.A: case Key.FSharpM: return 4;
+                case Key.E: case Key.CSharpM: return 5;
+                case Key.B: case Key.GSharpM: return 6;
+                case Key.FSharp: case Key.DSharpM: return 7;
+                case Key.CSharp: case Key.ASharpM: return 8;
+                case Key.F: case Key.Dm: return 9;
+                case Key.BFlat: case Key.Gm: return 10;
+                case Key.EFlat: case Key.Cm: return 11;
+                case Key.AFlat: case Key.Fm: return 12;
+                case Key.DFlat: case Key.BFlatM: return 13;
+                case Key.GFlat: case Key.EFlatM: return 14;
+                case Key.CFlat: case Key.AFlatM: return 15;
+                default: return 0;
+            }
         }
+     */
+
+    enum MusicEvent {
+        //% block="melody note played"
+        MelodyNotePlayed = 1,
+        //% block="melody started"
+        MelodyStarted = 2,
+        //% block="melody ended"
+        MelodyEnded = 3
+    }
+
+    /**
+     * Registers code to run on various melody events
+     */
+    //% blockId=melody_on_event block="music on %value"
+    //% help=music/on-event weight=59 blockGap=32
+    export function onEvent(value: MusicEvent, handler: () => void) {
+        control.onEvent(MICROBIT_MELODY_ID, value, handler);
     }
 
     /**
@@ -117,53 +135,28 @@ namespace abcNotation {
      */
     //% weight=60
     //% blockId=device_play_notes block="play notes %string"
-    export function playNotes(melodyNotes: string, options: MelodyOptions = 1) {
+    export function playNotes(melodyNotes: string) {
         init();
 
         // write function here (notes to melodyArray)
         melodyArray = ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f', 'd:8'];
 
         if (currentMelody != undefined) {
-            if (((options & MelodyOptions.OnceInBackground) == 0)
-                && ((options & MelodyOptions.ForeverInBackground) == 0)
-                && currentMelody.background) {
-                currentBackgroundMelody = currentMelody;
-                currentMelody = null;
-                control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.BackgroundMelodyPaused);
-            }
             if (currentMelody)
-                control.raiseEvent(MICROBIT_MELODY_ID, currentMelody.background ? MusicEvent.BackgroundMelodyEnded : MusicEvent.MelodyEnded);
-            currentMelody = new Melody(melodyArray, options);
-            control.raiseEvent(MICROBIT_MELODY_ID, currentMelody.background ? MusicEvent.BackgroundMelodyStarted : MusicEvent.MelodyStarted);
+                control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyEnded);
+            currentMelody = new Melody(melodyArray);
+            control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyStarted);
         } else {
-            currentMelody = new Melody(melodyArray, options);
-            control.raiseEvent(MICROBIT_MELODY_ID, currentMelody.background ? MusicEvent.BackgroundMelodyStarted : MusicEvent.MelodyStarted);
-            // Only start the fiber once
-            control.inBackground(() => {
-                while (currentMelody.hasNextNote()) {
-                    playNextNote(currentMelody);
-                    if (!currentMelody.hasNextNote() && currentBackgroundMelody) {
-                        // Swap the background melody back
-                        currentMelody = currentBackgroundMelody;
-                        currentBackgroundMelody = null;
-                        control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyEnded);
-                        control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.BackgroundMelodyResumed);
-                    }
-                }
-                control.raiseEvent(MICROBIT_MELODY_ID, currentMelody.background ? MusicEvent.BackgroundMelodyEnded : MusicEvent.MelodyEnded);
-                currentMelody = null;
-            })
+            currentMelody = new Melody(melodyArray);
+            control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyStarted);
+            while (currentMelody.hasNextNote()) {
+                playNextNote(currentMelody);
+            }
+            control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyEnded);
+            currentMelody = null;
         }
     }
 
-
-    /**
-    * Sets a custom playTone function for playing notes
-    */
-    //% advanced=true
-    export function setPlayTone(f: (frequency: number, duration: number) => void) {
-        _playTone = f;
-    }
 
     function playNextNote(melody: Melody): void {
         // cache elements
@@ -199,20 +192,16 @@ namespace abcNotation {
         }
         let beat = (60000 / beatsPerMinute) / 4;
         if (isrest) {
-            music.rest(currentDuration * beat)
+            pins.analogPitch(0, currentDuration * beat)
         } else {
             let keyNumber = note + (12 * (currentOctave - 1));
             let frequency = keyNumber >= 0 && keyNumber < freqTable.length ? freqTable[keyNumber] : 0;
-            music.playTone(frequency, currentDuration * beat);
+            pins.analogPitch(frequency, currentDuration * beat)
         }
         melody.currentDuration = currentDuration;
         melody.currentOctave = currentOctave;
-        const repeating = melody.repeating && currentPos == melody.melodyArray.length - 1;
-        melody.currentPos = repeating ? 0 : currentPos + 1;
-
-        control.raiseEvent(MICROBIT_MELODY_ID, melody.background ? MusicEvent.BackgroundMelodyNotePlayed : MusicEvent.MelodyNotePlayed);
-        if (repeating)
-            control.raiseEvent(MICROBIT_MELODY_ID, melody.background ? MusicEvent.BackgroundMelodyRepeated : MusicEvent.MelodyRepeated);
+        melody.currentPos = currentPos + 1;
+        control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyNotePlayed);
     }
 
     class Melody {
@@ -220,22 +209,16 @@ namespace abcNotation {
         public currentDuration: number;
         public currentOctave: number;
         public currentPos: number;
-        public repeating: boolean;
-        public background: boolean;
 
-        constructor(melodyArray: string[], options: MelodyOptions) {
+        constructor(melodyArray: string[]) {
             this.melodyArray = melodyArray;
-            this.repeating = ((options & MelodyOptions.Forever) != 0);
-            this.repeating = this.repeating ? true : ((options & MelodyOptions.ForeverInBackground) != 0)
-            this.background = ((options & MelodyOptions.OnceInBackground) != 0);
-            this.background = this.background ? true : ((options & MelodyOptions.ForeverInBackground) != 0);
             this.currentDuration = 4; //Default duration (Crotchet)
             this.currentOctave = 4; //Middle octave
             this.currentPos = 0;
         }
 
         hasNextNote() {
-            return this.repeating || this.currentPos < this.melodyArray.length;
+            return this.currentPos < this.melodyArray.length;
         }
 
         nextNote(): string {
