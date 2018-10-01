@@ -76,7 +76,7 @@ namespace abcNotation {
         //% block="Ebm"
         EFlatM = 29,
         //% block="Abm"
-        AFlatM = 30,
+        AFlatM = 30
     }
 
 
@@ -190,13 +190,13 @@ namespace abcNotation {
         if (!parsingOctave) {
             currentDuration = parseInt(currNote.substr(beatPos + 1, currNote.length - beatPos));
         }
-        let beat = (60000 / beatsPerMinute) / 4;
+        let unitNoteMs = (60000 / beatsPerMinute) * (unitNote / beatNote);
         if (isrest) {
-            pins.analogPitch(0, currentDuration * beat)
+            pins.analogPitch(0, currentDuration * unitNoteMs)
         } else {
             let keyNumber = note + (12 * (currentOctave - 1));
             let frequency = keyNumber >= 0 && keyNumber < freqTable.length ? freqTable[keyNumber] : 0;
-            pins.analogPitch(frequency, currentDuration * beat)
+            pins.analogPitch(frequency, currentDuration * unitNoteMs)
         }
         melody.currentDuration = currentDuration;
         melody.currentOctave = currentOctave;
