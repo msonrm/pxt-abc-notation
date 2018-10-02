@@ -2,18 +2,17 @@
 namespace abcNotation {
     let unitNote: number = 1 / 8;
     let beatNote: number = 1 / 4;
-    let beatsPerMinute: number = 120;
+    let bpm: number = 120;
     let key: number[] = [];
     let freqTable: number[] = [];
     const MICROBIT_MELODY_ID = 2000;
 
     function init() {
-        if (beatsPerMinute <= 0) beatsPerMinute = 120;
+        if (bpm <= 0) bpm = 120;
         if (freqTable.length == 0) freqTable = [28, 29, 31, 33, 35, 37, 39, 41, 44, 46, 49, 52, 55, 58, 62, 65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951, 4186]
     }
 
     let currentMelody: Melody;
-    let currentBackgroundMelody: Melody;
     let melodyArray: string[] = [];
 
     enum Key {
@@ -110,9 +109,9 @@ namespace abcNotation {
         }
      */
 
-    enum MusicEvent {
+    enum MelodyEvent {
         //% block="melody note played"
-        MelodyNotePlayed = 1,
+        NotePlayed = 1,
         //% block="melody started"
         MelodyStarted = 2,
         //% block="melody ended"
@@ -124,7 +123,7 @@ namespace abcNotation {
      */
     //% blockId=melody_on_event block="music on %value"
     //% help=music/on-event weight=59 blockGap=32
-    export function onEvent(value: MusicEvent, handler: () => void) {
+    export function onEvent(value: MelodyEvent, handler: () => void) {
         control.onEvent(MICROBIT_MELODY_ID, value, handler);
     }
 
@@ -143,16 +142,16 @@ namespace abcNotation {
 
         if (currentMelody != undefined) {
             if (currentMelody)
-                control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyEnded);
+                control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             currentMelody = new Melody(melodyArray);
-            control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyStarted);
+            control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
         } else {
             currentMelody = new Melody(melodyArray);
-            control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyStarted);
+            control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
             while (currentMelody.hasNextNote()) {
                 playNextNote(currentMelody);
             }
-            control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyEnded);
+            control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             currentMelody = null;
         }
     }
@@ -190,7 +189,7 @@ namespace abcNotation {
         if (!parsingOctave) {
             currentDuration = parseInt(currNote.substr(beatPos + 1, currNote.length - beatPos));
         }
-        let unitNoteMs = (60000 / beatsPerMinute) * (unitNote / beatNote);
+        let unitNoteMs = (60000 / bpm) * (unitNote / beatNote);
         if (isrest) {
             pins.analogPitch(0, currentDuration * unitNoteMs)
         } else {
@@ -201,7 +200,7 @@ namespace abcNotation {
         melody.currentDuration = currentDuration;
         melody.currentOctave = currentOctave;
         melody.currentPos = currentPos + 1;
-        control.raiseEvent(MICROBIT_MELODY_ID, MusicEvent.MelodyNotePlayed);
+        control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
     }
 
     class Melody {
@@ -212,7 +211,7 @@ namespace abcNotation {
 
         constructor(melodyArray: string[]) {
             this.melodyArray = melodyArray;
-            this.currentDuration = 4; //Default duration (Crotchet)
+            this.currentDuration = 1; //Default duration (unitNote*1)
             this.currentOctave = 4; //Middle octave
             this.currentPos = 0;
         }
