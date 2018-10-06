@@ -1,6 +1,6 @@
-# pxt-abc_notation beta
+# pxt-abc-notation beta
 
-micro:bit MakeCode extention for play with ABC notation.
+micro:bit MakeCode extention for play music with ABC notation.
 
 ## TODO
 
