@@ -110,11 +110,11 @@ namespace abcNotation {
      */
 
     enum MelodyEvent {
-        //% block="melody note played"
+        //*      //% block="melody note played"
         MelodyNotePlayed = 1,
-        //% block="melody started"
+        //*      //% block="melody started"
         MelodyStarted = 2,
-        //% block="melody ended"
+        //*      //% block="melody ended"
         MelodyEnded = 3
     }
 
