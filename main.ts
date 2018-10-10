@@ -138,7 +138,7 @@ namespace abcNotation {
         init();
 
         // write function here (notes to melodyArray)
-        melodyArray = ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f', 'd:8'];
+        melodyArray = ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f'];
 
         if (currentMelody != undefined) {
             if (currentMelody)
