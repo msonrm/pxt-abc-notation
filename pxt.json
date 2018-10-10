@@ -1,6 +1,6 @@
 {
     "name": "pxt-abc_notation",
-    "version": "0.0.31",
+    "version": "0.0.32",
     "description": "",
     "dependencies": {
         "core": "*",
