@@ -5,7 +5,7 @@ namespace abcNotation {
     let bpm: number = 120;
     let key: number[] = [];
     let freqTable: number[] = [];
-    const MICROBIT_MELODY_ID = 3000;
+    const MICROBIT_MELODY_ID = 2000;
 
     function init() {
         if (bpm <= 0) bpm = 120;
