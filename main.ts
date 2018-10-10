@@ -5,7 +5,7 @@ namespace abcNotation {
     let bpm: number = 120;
     let key: number[] = [];
     let freqTable: number[] = [];
-    const MICROBIT_MELODY_ID = 2000;
+    const MICROBIT_MELODY_ID = 3000;
 
     function init() {
         if (bpm <= 0) bpm = 120;
@@ -111,7 +111,7 @@ namespace abcNotation {
 
     enum MelodyEvent {
         //% block="melody note played"
-        NotePlayed = 1,
+        MelodyNotePlayed = 1,
         //% block="melody started"
         MelodyStarted = 2,
         //% block="melody ended"
@@ -121,8 +121,8 @@ namespace abcNotation {
     /**
      * Registers code to run on various melody events
      */
-    //% blockId=melody_on_event block="music on %value"
-    //% help=music/on-event weight=59 blockGap=32
+    //% blockId=music_on_event block="music(ABC notation) on %value"
+    //% weight=59 blockGap=32
     export function onEvent(value: MelodyEvent, handler: () => void) {
         control.onEvent(MICROBIT_MELODY_ID, value, handler);
     }
@@ -200,7 +200,7 @@ namespace abcNotation {
         melody.currentDuration = currentDuration;
         melody.currentOctave = currentOctave;
         melody.currentPos = currentPos + 1;
-        control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
+        control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyNotePlayed);
     }
 
     class Melody {
