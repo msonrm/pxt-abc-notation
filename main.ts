@@ -122,7 +122,7 @@ namespace abcNotation {
      * Registers code to run on various melody events
      */
     //% blockId=music_on_event block="music(ABC notation) on %value"
-    //% weight=59 blockGap=32
+    //% help=abc/on-event weight=59 blockGap=32
     export function onEvent(value: MelodyEvent, handler: () => void) {
         control.onEvent(MICROBIT_MELODY_ID, value, handler);
     }

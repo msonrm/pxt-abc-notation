@@ -1,5 +1,5 @@
 {
-    "name": "pxt-abc_notation",
+    "name": "pxt-abc-notation",
     "version": "0.0.32",
     "description": "",
     "dependencies": {
@@ -14,5 +14,5 @@
         "test.ts"
     ],
     "public": false,
-    "installedVersion": "workspace:4a5eb168-fc20-4a18-fe5d-777c47d5779d"
+    "installedVersion": "workspace:7afddd6b-a4ac-46c2-33fa-693e18cce203"
 }
