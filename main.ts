@@ -1,3 +1,76 @@
+enum Key {
+    //% block="C"
+    C = 1,
+    //% block="G"
+    G = 2,
+    //% block="D"
+    D = 3,
+    //% block="A"
+    A = 4,
+    //% block="E"
+    E = 5,
+    //% block="B"
+    B = 6,
+    //% block="F#"
+    FSharp = 7,
+    //% block="C#"
+    CSharp = 8,
+    //% block="F"
+    F = 9,
+    //% block="Bb"
+    BFlat = 10,
+    //% block="Eb"
+    EFlat = 11,
+    //% block="Ab"
+    AFlat = 12,
+    //% block="Db"
+    DFlat = 13,
+    //% block="Gb"
+    GFlat = 14,
+    //% block="Cb"
+    CFlat = 15,
+    //% block="Am"
+    Am = 16,
+    //% block="Em"
+    Em = 17,
+    //% block="Bm"
+    Bm = 18,
+    //% block="F#m"
+    FSharpM = 19,
+    //% block="C#m"
+    CSharpM = 20,
+    //% block="G#m"
+    GSharpM = 21,
+    //% block="D#m"
+    DSharpM = 22,
+    //% block="A#m"
+    ASharpM = 23,
+    //% block="Dm"
+    Dm = 24,
+    //% block="Gm"
+    Gm = 25,
+    //% block="Cm"
+    Cm = 26,
+    //% block="Fm"
+    Fm = 27,
+    //% block="Bbm"
+    BFlatM = 28,
+    //% block="Ebm"
+    EFlatM = 29,
+    //% block="Abm"
+    AFlatM = 30
+}
+
+enum MelodyEvent {
+    //*      //% block="melody note played"
+    MelodyNotePlayed = 1,
+    //*      //% block="melody started"
+    MelodyStarted = 2,
+    //*      //% block="melody ended"
+    MelodyEnded = 3
+}
+
+
 //% weight=70 icon="\uf001" color=#ffa500 block="ABC notation"
 namespace abcNotation {
     let unitNote: number = 1 / 8;
@@ -16,79 +89,6 @@ namespace abcNotation {
     let measureOrder: number[] = null;
     let currMeasure: string[] = [];
 
-    enum Key {
-        //% block="C"
-        C = 1,
-        //% block="G"
-        G = 2,
-        //% block="D"
-        D = 3,
-        //% block="A"
-        A = 4,
-        //% block="E"
-        E = 5,
-        //% block="B"
-        B = 6,
-        //% block="F#"
-        FSharp = 7,
-        //% block="C#"
-        CSharp = 8,
-        //% block="F"
-        F = 9,
-        //% block="Bb"
-        BFlat = 10,
-        //% block="Eb"
-        EFlat = 11,
-        //% block="Ab"
-        AFlat = 12,
-        //% block="Db"
-        DFlat = 13,
-        //% block="Gb"
-        GFlat = 14,
-        //% block="Cb"
-        CFlat = 15,
-        //% block="Am"
-        Am = 16,
-        //% block="Em"
-        Em = 17,
-        //% block="Bm"
-        Bm = 18,
-        //% block="F#m"
-        FSharpM = 19,
-        //% block="C#m"
-        CSharpM = 20,
-        //% block="G#m"
-        GSharpM = 21,
-        //% block="D#m"
-        DSharpM = 22,
-        //% block="A#m"
-        ASharpM = 23,
-        //% block="Dm"
-        Dm = 24,
-        //% block="Gm"
-        Gm = 25,
-        //% block="Cm"
-        Cm = 26,
-        //% block="Fm"
-        Fm = 27,
-        //% block="Bbm"
-        BFlatM = 28,
-        //% block="Ebm"
-        EFlatM = 29,
-        //% block="Abm"
-        AFlatM = 30
-    }
-
-
-
-    enum MelodyEvent {
-        //*      //% block="melody note played"
-        MelodyNotePlayed = 1,
-        //*      //% block="melody started"
-        MelodyStarted = 2,
-        //*      //% block="melody ended"
-        MelodyEnded = 3
-    }
 
     /**
      * Registers code to run on various melody events
