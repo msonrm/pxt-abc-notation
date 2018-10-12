@@ -89,26 +89,49 @@ namespace abcNotation {
     let measureOrder: number[] = null;
     let currMeasure: string[] = [];
 
-
     /**
      * Registers code to run on various melody events
-     */
-    //% blockId=music_on_event block="music(ABC notation) on %value"
-    //% help=abc/on-event weight=59 blockGap=32
+    */
+    //% blockId=music_on_event block="melody on %value"
+    //% weight=59
     export function onEvent(value: MelodyEvent, handler: () => void) {
         control.onEvent(MICROBIT_MELODY_ID, value, handler);
     }
 
     /**
-     * Play notes.
-     * Notes are expressed as a string of characters with ABC notation
-     * @param melodyNotes the melody notes to play
+     * Sets the unit note length.
+     */
+    //% blockId=set_unit_note_length block="set unit note length(L:) %value"
+    export function setUnitNote() {
+        
+    }
+
+    /**
+     * Sets the tempo.
+     */
+    //% blockId=set_tempo block="set tempo(Q:) %beatNote = %bpm"
+    export function setTempo() {
+
+    }
+
+
+    /**
+     * Sets the key.
+     */
+    //% blockId=set_key block="set key(K:) %key"
+    export function setKey() {
+
+    }
+
+
+    /**
+     * Play score.
+     * Score are expressed as a string of characters with ABC notation.
      */
     //% weight=60
-    //% blockId=device_play_score block="play score %string"
+    //% blockId=play_score block="play score %string"
     export function playScore(score: string) {
         init();
-
 
         if (scoreArray != null) {
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
@@ -129,9 +152,7 @@ namespace abcNotation {
         }
     }
 
-
     function playMeasure(currMeasure:string[]): void {
-        // cache elements
 
         control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyNotePlayed);
     }
