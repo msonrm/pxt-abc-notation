@@ -94,7 +94,7 @@ namespace abcNotation {
     let beatNote: number = 1 / 4;
     let bpm: number = 120;
     let unitNoteMs = 62.5;
-    let key: number[] = [];
+    let key: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let freqTable: number[] = [];
     const MICROBIT_MELODY_ID = 2000;
 
@@ -103,7 +103,7 @@ namespace abcNotation {
         if (beatNote <= 0) beatNote = 1 / 4;
         if (bpm <= 0) bpm = 120;
         if (unitNoteMs <= 0) unitNoteMs = (60000 / bpm) * (unitNote / beatNote);
-        if (freqTable.length == 0) freqTable = [65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951]
+        if (freqTable.length == 0) freqTable = [65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951, 0]
     }
 
     /**
@@ -214,7 +214,7 @@ namespace abcNotation {
 
     function scoreToScoreArray(score: string): string[][] {
         // return dummy
-        return [['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f'], ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f']];
+        return [["C", "D", "E", "F", "G", "A", "B", "z"], ["B", "A", "G", "F", "E", "D", "C", "Z", "C"]];
     }
 
     function scoreToMeasureOrder(score: string): number[] {
@@ -228,7 +228,7 @@ namespace abcNotation {
         let currNotePos: number; //current note position at the measure  
         let currAccidental: number; //current accidental
         let currNoteNumber: number;
-        let currOctave: number;
+        let isrest: boolean = false;
         let beatPos: number;
         let noteNumber: number;
         let duration: number;
@@ -243,31 +243,43 @@ namespace abcNotation {
                     case "^": currAccidental = 1; break;
                     case "_": currAccidental = -1; break;
                     case "=": currAccidental = 0; break;
-                    case "C": currNoteNumber = 24; currOctave = 4; break;
-                    case "D": currNoteNumber = 26; currOctave = 4; break;
-                    case "E": currNoteNumber = 28; currOctave = 4; break;
-                    case "F": currNoteNumber = 29; currOctave = 4; break;
-                    case "G": currNoteNumber = 31; currOctave = 4; break;
-                    case "A": currNoteNumber = 33; currOctave = 4; break;
-                    case "B": currNoteNumber = 35; currOctave = 4; break;
-                    case "c": currNoteNumber = 36; currOctave = 5; break;
-                    case "d": currNoteNumber = 38; currOctave = 5; break;
-                    case "e": currNoteNumber = 40; currOctave = 5; break;
-                    case "f": currNoteNumber = 41; currOctave = 5; break;
-                    case "g": currNoteNumber = 43; currOctave = 5; break;
-                    case "a": currNoteNumber = 45; currOctave = 5; break;
-                    case "b": currNoteNumber = 47; currOctave = 5; break;
-                    case "'": currNoteNumber += 12; currOctave +=1 ; break;
-                    case ",": currNoteNumber -= 12; currOctave -=1; break;
-                    default: if (beatPos==0) beatPos = pos; 
+                    case "C": currNoteNumber = 24; break;
+                    case "D": currNoteNumber = 26; break;
+                    case "E": currNoteNumber = 28; break;
+                    case "F": currNoteNumber = 29; break;
+                    case "G": currNoteNumber = 31; break;
+                    case "A": currNoteNumber = 33; break;
+                    case "B": currNoteNumber = 35; break;
+                    case "c": currNoteNumber = 36; break;
+                    case "d": currNoteNumber = 38; break;
+                    case "e": currNoteNumber = 40; break;
+                    case "f": currNoteNumber = 41; break;
+                    case "g": currNoteNumber = 43; break;
+                    case "a": currNoteNumber = 45; break;
+                    case "b": currNoteNumber = 47; break;
+                    case "z": currNoteNumber = 72; isrest = true; break;
+                    case "Z": currNoteNumber = 72; isrest = true; duration = unitNoteMs / unitNote; break;
+                    case "'": currNoteNumber += 12; break;
+                    case ",": currNoteNumber -= 12; break;
+                    default: if (beatPos == 0) beatPos = pos;
                 }
             }
-            let beatString = currNote.substr(beatPos,currNote.length);
-            if (beatString.charAt(0)=="/") {
-                
+            if (!isrest && currAccidental != null) {
+                currKey[currNoteNumber] = currAccidental;
+                noteNumber = currNoteNumber + currKey[currNoteNumber];
             }
+            let beatString = currNote.substr(beatPos, currNote.length);
+            if (beatString.indexOf("/") >= 0) {
+                //write function for decode beatString to duration.    
+                duration = 100;
+            }
+            duration = 100;
+            // play sound of note!
+            pins.analogPitch(freqTable[noteNumber], duration);
+            // reset note
+            
+            if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
         }
-        control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
     }
 }
 
