@@ -1,4 +1,19 @@
-enum Key {
+enum NoteFraction {
+    //% block="1"
+    Whole = 1,
+    //% block="1/2"
+    Half = 2,
+    //% block="1/4"
+    Quarter = 4,
+    //% block="1/8"
+    Eighth = 8,
+    //% block="1/16"
+    Sixteenth = 16,
+    //% block="1/32"
+    Thirtysecond = 32
+}
+
+enum KeyNameMajor {
     //% block="C"
     C = 1,
     //% block="G"
@@ -29,7 +44,9 @@ enum Key {
     GFlat = 14,
     //% block="Cb"
     CFlat = 15,
-    //% block="Am"
+}
+
+enum KeyNameMinor {
     Am = 16,
     //% block="Em"
     Em = 17,
@@ -62,11 +79,11 @@ enum Key {
 }
 
 enum MelodyEvent {
-    //*      //% block="melody note played"
-    MelodyNotePlayed = 1,
-    //*      //% block="melody started"
+    //% block="note played"
+    NotePlayed = 1,
+    //% block="melody started"
     MelodyStarted = 2,
-    //*      //% block="melody ended"
+    //% block="melody ended"
     MelodyEnded = 3
 }
 
@@ -76,18 +93,18 @@ namespace abcNotation {
     let unitNote: number = 1 / 8;
     let beatNote: number = 1 / 4;
     let bpm: number = 120;
+    let unitNoteMs = 62.5;
     let key: number[] = [];
     let freqTable: number[] = [];
     const MICROBIT_MELODY_ID = 2000;
 
     function init() {
+        if (unitNote <= 0) unitNote = 1 / 8;
+        if (beatNote <= 0) beatNote = 1 / 4;
         if (bpm <= 0) bpm = 120;
-        if (freqTable.length == 0) freqTable = [28, 29, 31, 33, 35, 37, 39, 41, 44, 46, 49, 52, 55, 58, 62, 65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951, 4186]
+        if (unitNoteMs <= 0) unitNoteMs = (60000 / bpm) * (unitNote / beatNote);
+        if (freqTable.length == 0) freqTable = [65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951]
     }
-
-    let scoreArray: string[][] = null;
-    let measureOrder: number[] = null;
-    let currMeasure: string[] = [];
 
     /**
      * Registers code to run on various melody events
@@ -101,26 +118,68 @@ namespace abcNotation {
     /**
      * Sets the unit note length.
      */
-    //% blockId=set_unit_note_length block="set unit note length(L:) %value"
-    export function setUnitNote() {
-        
+    //% blockId=set_unit_note block="set unit note(L:) %value"
+    export function setUnitNote(value: NoteFraction): void {
+        init();
+        unitNote = 1 / value;
     }
 
     /**
      * Sets the tempo.
      */
     //% blockId=set_tempo block="set tempo(Q:) %beatNote = %bpm"
-    export function setTempo() {
-
+    export function setTempo(beatNote: NoteFraction, bpm: number): void {
+        unitNoteMs = (60000 / bpm) * (unitNote / beatNote);
     }
 
+    /**
+     * Sets the major key.
+     */
+    //% blockId=set_major_key block="set major key (K:) %setKey"
+    export function setMajorKey(setKey: KeyNameMajor): void {
+        switch (setKey) {
+            case KeyNameMajor.C: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case KeyNameMajor.G: key = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+            case KeyNameMajor.D: key = [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0];
+            case KeyNameMajor.A: key = [1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0];
+            case KeyNameMajor.E: key = [1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0];
+            case KeyNameMajor.B: key = [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0];
+            case KeyNameMajor.FSharp: key = [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0];
+            case KeyNameMajor.CSharp: key = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+            case KeyNameMajor.F: key = [0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
+            case KeyNameMajor.BFlat: key = [0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1];
+            case KeyNameMajor.EFlat: key = [0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1];
+            case KeyNameMajor.AFlat: key = [0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1];
+            case KeyNameMajor.DFlat: key = [0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1];
+            case KeyNameMajor.GFlat: key = [-1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1];
+            case KeyNameMajor.CFlat: key = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        }
+    }
 
     /**
-     * Sets the key.
+     * Sets the minor key.
      */
-    //% blockId=set_key block="set key(K:) %key"
-    export function setKey() {
-
+    //% blockId=set_minor_key block="set minor key (K:) %setKey"
+    export function setMinorKey(setKey: KeyNameMinor): void {
+        switch (setKey) {
+            case KeyNameMinor.Am: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case KeyNameMinor.Em: key = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+            case KeyNameMinor.Bm: key = [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0];
+            case KeyNameMinor.FSharpM: key = [1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0];
+            case KeyNameMinor.CSharpM: key = [1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0];
+            case KeyNameMinor.GSharpM: key = [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0];
+            case KeyNameMinor.DSharpM: key = [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0];
+            case KeyNameMinor.ASharpM: key = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+            case KeyNameMinor.Dm: key = [0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
+            case KeyNameMinor.Gm: key = [0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1];
+            case KeyNameMinor.Cm: key = [0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1];
+            case KeyNameMinor.Fm: key = [0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1];
+            case KeyNameMinor.BFlatM: key = [0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1];
+            case KeyNameMinor.EFlatM: key = [-1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1];
+            case KeyNameMinor.AFlatM: key = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        }
     }
 
 
@@ -132,19 +191,20 @@ namespace abcNotation {
     //% blockId=play_score block="play score %string"
     export function playScore(score: string) {
         init();
+        let scoreArray: string[][] = null;
+        let measureOrder: number[] = null;
+        let currMeasure: string[] = [];
 
         if (scoreArray != null) {
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
-            // write function here (score to scoreArray,measureOrder)
-            scoreArray = [['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f'], ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f']];
-            measureOrder = [0, 1]
+            scoreArray = scoreToScoreArray(score);
+            measureOrder = scoreToMeasureOrder(score)
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
         } else {
-            // write function here (score to scoreArray,measureOrder)
-            scoreArray = [['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f'], ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f']];
-            measureOrder = [0, 1]
+            scoreArray = scoreToScoreArray(score);
+            measureOrder = scoreToMeasureOrder(score)
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
-            for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++){
+            for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++) {
                 playMeasure(scoreArray[measureOrder[melodyIndex]]);
             }
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
@@ -152,8 +212,65 @@ namespace abcNotation {
         }
     }
 
-    function playMeasure(currMeasure:string[]): void {
+    function scoreToScoreArray(score: string): string[][] {
+        // return dummy
+        return [['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f'], ['r4:2', 'a', 'g', 'g', 'b:8', 'r:2', 'f', 'f', 'f']];
+    }
 
-        control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyNotePlayed);
+    function scoreToMeasureOrder(score: string): number[] {
+        // return dummy
+        return [0, 1];
+    }
+
+    function playMeasure(currMeasure: string[]): void {
+        let currKey = key; //key at the measure
+        let currNote: string; //current note strings
+        let currNotePos: number; //current note position at the measure  
+        let currAccidental: number; //current accidental
+        let currNoteNumber: number;
+        let currOctave: number;
+        let beatPos: number;
+        let noteNumber: number;
+        let duration: number;
+        let frequency: number;
+
+        for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
+            currNote = currMeasure[currNotePos];
+            for (let pos = 0; pos < currNote.length; pos++) {
+                let noteChar = currNote.charAt(pos);
+                beatPos = 0;
+                switch (noteChar) {
+                    case "^": currAccidental = 1; break;
+                    case "_": currAccidental = -1; break;
+                    case "=": currAccidental = 0; break;
+                    case "C": currNoteNumber = 24; currOctave = 4; break;
+                    case "D": currNoteNumber = 26; currOctave = 4; break;
+                    case "E": currNoteNumber = 28; currOctave = 4; break;
+                    case "F": currNoteNumber = 29; currOctave = 4; break;
+                    case "G": currNoteNumber = 31; currOctave = 4; break;
+                    case "A": currNoteNumber = 33; currOctave = 4; break;
+                    case "B": currNoteNumber = 35; currOctave = 4; break;
+                    case "c": currNoteNumber = 36; currOctave = 5; break;
+                    case "d": currNoteNumber = 38; currOctave = 5; break;
+                    case "e": currNoteNumber = 40; currOctave = 5; break;
+                    case "f": currNoteNumber = 41; currOctave = 5; break;
+                    case "g": currNoteNumber = 43; currOctave = 5; break;
+                    case "a": currNoteNumber = 45; currOctave = 5; break;
+                    case "b": currNoteNumber = 47; currOctave = 5; break;
+                    case "'": currNoteNumber += 12; currOctave +=1 ; break;
+                    case ",": currNoteNumber -= 12; currOctave -=1; break;
+                    default: if (beatPos==0) beatPos = pos; 
+                }
+            }
+            let beatString = currNote.substr(beatPos,currNote.length);
+            if (beatString.charAt(0)=="/") {
+                
+            }
+        }
+        control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
     }
 }
+
+
+
+
