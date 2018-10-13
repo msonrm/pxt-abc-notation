@@ -282,7 +282,3 @@ namespace abcNotation {
         }
     }
 }
-
-
-
-
