@@ -277,7 +277,7 @@ namespace abcNotation {
             // play sound of note!
             pins.analogPitch(freqTable[noteNumber], duration);
             // reset note
-            
+
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
         }
     }
