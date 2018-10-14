@@ -270,7 +270,3 @@ namespace abcNotation {
         control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
     }
 }
-
-
-
-
