@@ -269,10 +269,10 @@ namespace abcNotation {
                 noteNumber = currNoteNumber + currKey[currNoteNumber];
             }
             let beatString = currNote.substr(beatPos, currNote.length);
-            if (beatString.indexOf("/")) {
+//            if (beatString.indexOf("/")) {
                 //write function for decode beatString to duration.    
-                duration = 100;
-            }
+//               duration = 100;
+//            }
             duration = 100;
             // play sound of note
             frequency = freqTable[noteNumber];
