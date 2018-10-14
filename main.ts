@@ -257,15 +257,18 @@ namespace abcNotation {
                     case "g": currNoteNumber = 43; currOctave = 5; break;
                     case "a": currNoteNumber = 45; currOctave = 5; break;
                     case "b": currNoteNumber = 47; currOctave = 5; break;
-                    case "'": currNoteNumber += 12; currOctave +=1 ; break;
-                    case ",": currNoteNumber -= 12; currOctave -=1; break;
-                    default: if (beatPos==0) beatPos = pos; 
+                    case "'": currNoteNumber += 12; currOctave += 1; break;
+                    case ",": currNoteNumber -= 12; currOctave -= 1; break;
+                    default: if (beatPos == 0) beatPos = pos;
                 }
             }
-            let beatString = currNote.substr(beatPos,currNote.length);
-            if (beatString.charAt(0)=="/") {
-                
+            let beatString = currNote.substr(beatPos, currNote.length);
+            if (beatString.charAt(0) == "/") {
+
             }
+            duration = 100;
+            frequency = freqTable[noteNumber];
+            pins.analogPitch(frequency, duration);
         }
         control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
     }
