@@ -214,7 +214,7 @@ namespace abcNotation {
 
     function scoreToScoreArray(score: string): string[][] {
         // return dummy
-        return [["C", "D", "E", "F", "G", "A", "B", "z"], ["B", "A", "G", "F", "E", "D", "C", "Z", "C"]];
+        return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["B1", "A2", "G1", "F2", "E1", "D2", "C1", "Z2", "C1"]];
     }
 
     function scoreToMeasureOrder(score: string): number[] {
@@ -278,7 +278,7 @@ namespace abcNotation {
             frequency = freqTable[noteNumber];
 //            pins.analogPitch(frequency, duration);
             basic.showNumber(frequency);
-            basic.showNumber(duration);
+            basic.showNumber(0);
             // reset note
 
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
