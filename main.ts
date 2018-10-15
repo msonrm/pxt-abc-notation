@@ -276,7 +276,9 @@ namespace abcNotation {
             duration = 100;
             // play sound of note
             frequency = freqTable[noteNumber];
-            pins.analogPitch(frequency, duration);
+//            pins.analogPitch(frequency, duration);
+            basic.showNumber(frequency);
+            basic.showNumber(duration);
             // reset note
 
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
