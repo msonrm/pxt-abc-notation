@@ -94,7 +94,7 @@ namespace abcNotation {
     let beatNote: number = 1 / 4;
     let bpm: number = 120;
     let unitNoteMs = 62.5;
-    let key: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let key: number[] = [];
     let freqTable: number[] = [];
     const MICROBIT_MELODY_ID = 2000;
 
@@ -138,22 +138,22 @@ namespace abcNotation {
     //% blockId=set_major_key block="set major key (K:) %setKey"
     export function setMajorKey(setKey: KeyNameMajor): void {
         switch (setKey) {
-            case KeyNameMajor.C: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            case KeyNameMajor.G: key = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-            case KeyNameMajor.D: key = [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0];
-            case KeyNameMajor.A: key = [1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0];
-            case KeyNameMajor.E: key = [1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0];
-            case KeyNameMajor.B: key = [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0];
-            case KeyNameMajor.FSharp: key = [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0];
-            case KeyNameMajor.CSharp: key = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-            case KeyNameMajor.F: key = [0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
-            case KeyNameMajor.BFlat: key = [0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1];
-            case KeyNameMajor.EFlat: key = [0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1];
-            case KeyNameMajor.AFlat: key = [0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1];
-            case KeyNameMajor.DFlat: key = [0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1];
-            case KeyNameMajor.GFlat: key = [-1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1];
-            case KeyNameMajor.CFlat: key = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case KeyNameMajor.C: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case KeyNameMajor.G: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case KeyNameMajor.D: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case KeyNameMajor.A: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case KeyNameMajor.E: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case KeyNameMajor.B: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
+            case KeyNameMajor.FSharp: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
+            case KeyNameMajor.CSharp: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
+            case KeyNameMajor.F: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
+            case KeyNameMajor.BFlat: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
+            case KeyNameMajor.EFlat: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case KeyNameMajor.AFlat: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case KeyNameMajor.DFlat: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case KeyNameMajor.GFlat: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case KeyNameMajor.CFlat: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
+            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
     }
 
@@ -163,22 +163,22 @@ namespace abcNotation {
     //% blockId=set_minor_key block="set minor key (K:) %setKey"
     export function setMinorKey(setKey: KeyNameMinor): void {
         switch (setKey) {
-            case KeyNameMinor.Am: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            case KeyNameMinor.Em: key = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-            case KeyNameMinor.Bm: key = [1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0];
-            case KeyNameMinor.FSharpM: key = [1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0];
-            case KeyNameMinor.CSharpM: key = [1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0];
-            case KeyNameMinor.GSharpM: key = [1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0];
-            case KeyNameMinor.DSharpM: key = [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0];
-            case KeyNameMinor.ASharpM: key = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-            case KeyNameMinor.Dm: key = [0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
-            case KeyNameMinor.Gm: key = [0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, -1];
-            case KeyNameMinor.Cm: key = [0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1, 0, 0, -1, 0, 0, -1, -1];
-            case KeyNameMinor.Fm: key = [0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, 0, -1, -1];
-            case KeyNameMinor.BFlatM: key = [0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, -1, -1, -1];
-            case KeyNameMinor.EFlatM: key = [-1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1];
-            case KeyNameMinor.AFlatM: key = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case KeyNameMinor.Am: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case KeyNameMinor.Em: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case KeyNameMinor.Bm: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case KeyNameMinor.FSharpM: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case KeyNameMinor.CSharpM: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case KeyNameMinor.GSharpM: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
+            case KeyNameMinor.DSharpM: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
+            case KeyNameMinor.ASharpM: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
+            case KeyNameMinor.Dm: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
+            case KeyNameMinor.Gm: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
+            case KeyNameMinor.Cm: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case KeyNameMinor.Fm: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case KeyNameMinor.BFlatM: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case KeyNameMinor.EFlatM: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case KeyNameMinor.AFlatM: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
+            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
     }
 
@@ -223,7 +223,7 @@ namespace abcNotation {
     }
 
     function playMeasure(currMeasure: string[]): void {
-        let currKey = key; //key at the measure
+        let currKey: number[]; //key at the measure
         let currNote: string; //current note strings
         let currNotePos: number; //current note position at the measure  
         let currAccidental: number; //current accidental
@@ -233,6 +233,14 @@ namespace abcNotation {
         let noteNumber: number;
         let duration: number;
         let frequency: number;
+
+        //set current key from key(6 octaves) & rest
+        for (let i = 0; i < 6; i++) {
+            key.forEach(function (value: number, index: number) {
+                currKey.push(value);
+            })
+        }
+        currKey.push(0);
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
@@ -264,21 +272,19 @@ namespace abcNotation {
                     default: if (beatPos == 0) beatPos = pos;
                 }
             }
-            if (!isrest && currAccidental != null) {
-                currKey[currNoteNumber] = currAccidental;
-                noteNumber = currNoteNumber + currKey[currNoteNumber];
-            }
+            currKey[currNoteNumber] = currAccidental;
+            noteNumber = currNoteNumber + currKey[currNoteNumber];
             let beatString = currNote.substr(beatPos, currNote.length);
-//            if (beatString.indexOf("/")) {
-                //write function for decode beatString to duration.    
-//               duration = 100;
-//            }
+            //            if (beatString.indexOf("/")) {
+            //write function for decode beatString to duration.    
+            //               duration = 100;
+            //            }
             duration = 100;
             // play sound of note
             frequency = freqTable[noteNumber];
-//            pins.analogPitch(frequency, duration);
-            basic.showNumber(frequency);
-            basic.showNumber(0);
+            //            pins.analogPitch(frequency, duration);
+            basic.showNumber(noteNumber);
+            basic.showNumber(duration);
             // reset note
 
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
