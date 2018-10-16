@@ -214,7 +214,7 @@ namespace abcNotation {
 
     function scoreToScoreArray(score: string): string[][] {
         // return dummy
-        return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["B1", "A2", "G1", "F2", "E1", "D2", "C1", "Z2", "C1"]];
+        return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["B1", "A2"]];
     }
 
     function scoreToMeasureOrder(score: string): number[] {
@@ -244,6 +244,9 @@ namespace abcNotation {
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
+            currAccidental = null;
+            isrest = false;
+            duration = unitNoteMs / unitNote;
             for (let pos = 0; pos < currNote.length; pos++) {
                 let noteChar = currNote.charAt(pos);
                 beatPos = 0;
@@ -272,7 +275,7 @@ namespace abcNotation {
                     default: if (beatPos == 0) beatPos = pos;
                 }
             }
-            currKey[currNoteNumber] = currAccidental;
+            if (currAccidental != null) currKey[currNoteNumber] = currAccidental;
             noteNumber = currNoteNumber + currKey[currNoteNumber];
             let beatString = currNote.substr(beatPos, currNote.length);
             //            if (beatString.indexOf("/")) {
@@ -284,7 +287,7 @@ namespace abcNotation {
             frequency = freqTable[noteNumber];
             //            pins.analogPitch(frequency, duration);
             basic.showNumber(noteNumber);
- //           basic.showNumber(duration);
+            //           basic.showNumber(duration);
             // reset note
 
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
