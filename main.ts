@@ -202,11 +202,12 @@ namespace abcNotation {
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
         } else {
             scoreArray = scoreToScoreArray(score);
-            measureOrder = scoreToMeasureOrder(score)
+            measureOrder = scoreToMeasureOrder(score);
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
-            basic.showNumber(120);
+            let measureToPlay: number;
             for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++) {
-                playMeasure(scoreArray[measureOrder[melodyIndex]]);
+                measureToPlay = measureOrder[melodyIndex];
+                playMeasure(scoreArray[measureToPlay]);
             }
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             scoreArray = null;
@@ -287,7 +288,7 @@ namespace abcNotation {
             // play sound of note
             frequency = freqTable[noteNumber];
             //            pins.analogPitch(frequency, duration);
-            basic.showNumber(noteNumber);
+            basic.showNumber(duration);
             //           basic.showNumber(duration);
             // reset note
 
