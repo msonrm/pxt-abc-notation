@@ -204,6 +204,7 @@ namespace abcNotation {
             scoreArray = scoreToScoreArray(score);
             measureOrder = scoreToMeasureOrder(score)
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
+            basic.showNumber(120);
             for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++) {
                 playMeasure(scoreArray[measureOrder[melodyIndex]]);
             }
