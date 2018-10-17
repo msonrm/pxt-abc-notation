@@ -217,7 +217,7 @@ namespace abcNotation {
 
     function scoreToScoreArray(score: string): string[][] {
         // return dummy
-        return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["B1", "A2"]];
+        return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["C1", "D2"]];
     }
 
     function scoreToMeasureOrder(score: string): number[] {
@@ -243,7 +243,6 @@ namespace abcNotation {
                 currKey.push(value);
             })
         }
-        //        currKey = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
@@ -273,8 +272,8 @@ namespace abcNotation {
                     case "b": currNoteNumber = 48; break;
                     case "z": currNoteNumber = 0; isrest = true; break;
                     case "Z": currNoteNumber = 0; isrest = true; duration = unitNoteMs / unitNote; break;
-                    case "'": currNoteNumber += 12; break;
-                    case ",": currNoteNumber -= 12; break;
+                    case "'": if (!isrest) currNoteNumber += 12; break;
+                    case ",": if (!isrest) currNoteNumber -= 12; break;
                     default: if (beatPos == 0) beatPos = pos;
                 }
             }
@@ -288,8 +287,7 @@ namespace abcNotation {
             duration = 100;
             // play sound of note
             frequency = freqTable[noteNumber];
-            //            pins.analogPitch(frequency, duration);
-            basic.showNumber(frequency);
+            pins.analogPitch(frequency, duration);
             //           basic.showNumber(duration);
             // reset note
 
