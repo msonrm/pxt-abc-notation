@@ -285,7 +285,7 @@ namespace abcNotation {
             //write function for decode beatString to duration.    
             //               duration = 100;
             //            }
-            duration = 500;
+            duration = 300;
             // play sound of note
             frequency = freqTable[noteNumber];
             pins.analogPitch(frequency, duration);
