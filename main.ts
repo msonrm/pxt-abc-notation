@@ -208,7 +208,8 @@ namespace abcNotation {
             let measureToPlay: number;
             for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++) {
                 measureToPlay = measureOrder[melodyIndex];
-                playMeasure(scoreArray[measureToPlay]);
+                basic.showNumber(measureToPlay);
+                //playMeasure(scoreArray[measureToPlay]);
             }
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             scoreArray = null;
