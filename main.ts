@@ -104,7 +104,7 @@ namespace abcNotation {
         if (bpm <= 0) bpm = 120;
         if (unitNoteMs <= 0) unitNoteMs = (60000 / bpm) * (unitNote / beatNote);
         if (key = []) key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        if (freqTable.length == 0) freqTable = [65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951, 0]
+        if (freqTable.length == 0) freqTable = [0, 65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951]
     }
 
     /**
@@ -226,7 +226,7 @@ namespace abcNotation {
     }
 
     function playMeasure(currMeasure: string[]): void {
-        let currKey: number[]; //key at the measure
+        let currKey: number[] = [0]; //key at the measure
         let currNote: string; //current note strings
         let currNotePos: number; //current note position at the measure  
         let currAccidental: number; //current accidental
@@ -239,11 +239,10 @@ namespace abcNotation {
 
         //set current key from key(6 octaves) & rest
         for (let i = 0; i < 6; i++) {
-            for (let j = 0; j < 12; j++) {
-                currKey.push(key[j]);
-            }
+            key.forEach(function (value) {
+                currKey.push(value);
+            })
         }
-        currKey.push(0);
         //        currKey = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
@@ -258,22 +257,22 @@ namespace abcNotation {
                     case "^": currAccidental = 1; break;
                     case "_": currAccidental = -1; break;
                     case "=": currAccidental = 0; break;
-                    case "C": currNoteNumber = 24; break;
-                    case "D": currNoteNumber = 26; break;
-                    case "E": currNoteNumber = 28; break;
-                    case "F": currNoteNumber = 29; break;
-                    case "G": currNoteNumber = 31; break;
-                    case "A": currNoteNumber = 33; break;
-                    case "B": currNoteNumber = 35; break;
-                    case "c": currNoteNumber = 36; break;
-                    case "d": currNoteNumber = 38; break;
-                    case "e": currNoteNumber = 40; break;
-                    case "f": currNoteNumber = 41; break;
-                    case "g": currNoteNumber = 43; break;
-                    case "a": currNoteNumber = 45; break;
-                    case "b": currNoteNumber = 47; break;
-                    case "z": currNoteNumber = 72; isrest = true; break;
-                    case "Z": currNoteNumber = 72; isrest = true; duration = unitNoteMs / unitNote; break;
+                    case "C": currNoteNumber = 25; break;
+                    case "D": currNoteNumber = 27; break;
+                    case "E": currNoteNumber = 29; break;
+                    case "F": currNoteNumber = 30; break;
+                    case "G": currNoteNumber = 32; break;
+                    case "A": currNoteNumber = 34; break;
+                    case "B": currNoteNumber = 36; break;
+                    case "c": currNoteNumber = 37; break;
+                    case "d": currNoteNumber = 39; break;
+                    case "e": currNoteNumber = 41; break;
+                    case "f": currNoteNumber = 42; break;
+                    case "g": currNoteNumber = 44; break;
+                    case "a": currNoteNumber = 46; break;
+                    case "b": currNoteNumber = 48; break;
+                    case "z": currNoteNumber = 0; isrest = true; break;
+                    case "Z": currNoteNumber = 0; isrest = true; duration = unitNoteMs / unitNote; break;
                     case "'": currNoteNumber += 12; break;
                     case ",": currNoteNumber -= 12; break;
                     default: if (beatPos == 0) beatPos = pos;
