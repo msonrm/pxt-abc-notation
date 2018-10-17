@@ -208,8 +208,7 @@ namespace abcNotation {
             let measureToPlay: number;
             for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++) {
                 measureToPlay = measureOrder[melodyIndex];
-                basic.showNumber(measureToPlay);
-                //playMeasure(scoreArray[measureToPlay]);
+                playMeasure(scoreArray[measureToPlay]);
             }
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             scoreArray = null;
@@ -239,12 +238,13 @@ namespace abcNotation {
         let frequency: number;
 
         //set current key from key(6 octaves) & rest
-        for (let i = 0; i < 6; i++) {
-            key.forEach(function (value: number, index: number) {
-                currKey.push(value);
-            })
-        }
-        currKey.push(0);
+//        for (let i = 0; i < 6; i++) {
+//            key.forEach(function (value: number, index: number) {
+//                currKey.push(value);
+//            })
+//        }
+//        currKey.push(0);
+        currKey = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
