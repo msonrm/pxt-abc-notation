@@ -278,13 +278,14 @@ namespace abcNotation {
                 }
             }
             if (currAccidental != null) currKey[currNoteNumber] = currAccidental;
+            basic.showNumber(currKey[currNoteNumber]);
             noteNumber = currNoteNumber + currKey[currNoteNumber];
             let beatString = currNote.substr(beatPos, currNote.length);
             //            if (beatString.indexOf("/")) {
             //write function for decode beatString to duration.    
             //               duration = 100;
             //            }
-            duration = 100;
+            duration = 500;
             // play sound of note
             frequency = freqTable[noteNumber];
             pins.analogPitch(frequency, duration);
