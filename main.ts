@@ -290,7 +290,7 @@ namespace abcNotation {
             // play sound of note
             frequency = freqTable[noteNumber];
             //            pins.analogPitch(frequency, duration);
-            basic.showNumber(duration);
+            basic.showNumber(frequency);
             //           basic.showNumber(duration);
             // reset note
 
