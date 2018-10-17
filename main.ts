@@ -238,13 +238,13 @@ namespace abcNotation {
         let frequency: number;
 
         //set current key from key(6 octaves) & rest
-//        for (let i = 0; i < 6; i++) {
-//            key.forEach(function (value: number, index: number) {
-//                currKey.push(value);
-//            })
-//        }
-//        currKey.push(0);
-        currKey = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 12; j++) {
+                currKey.push(key[j]);
+            }
+        }
+        currKey.push(0);
+        //        currKey = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
