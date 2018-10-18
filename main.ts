@@ -137,7 +137,7 @@ namespace abcNotation {
      * Sets the major key.
      */
     //% blockId=set_major_key block="set major key (K:) %setKey"
-    export function setMajorKey(setKey: KeyNameMajor): void {
+    export function setMajorKey(setKey?: KeyNameMajor): void {
         switch (setKey) {
             case KeyNameMajor.C: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             case KeyNameMajor.G: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
@@ -162,7 +162,7 @@ namespace abcNotation {
      * Sets the minor key.
      */
     //% blockId=set_minor_key block="set minor key (K:) %setKey"
-    export function setMinorKey(setKey: KeyNameMinor): void {
+    export function setMinorKey(setKey?: KeyNameMinor): void {
         switch (setKey) {
             case KeyNameMinor.Am: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             case KeyNameMinor.Em: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
@@ -288,7 +288,7 @@ namespace abcNotation {
             duration = 300;
             // play sound of note
             frequency = freqTable[noteNumber];
-            pins.analogPitch(frequency, duration);
+            //pins.analogPitch(frequency, duration);
             //           basic.showNumber(duration);
             // reset note
 
