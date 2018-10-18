@@ -241,6 +241,7 @@ namespace abcNotation {
         for (let i = 0; i < 6; i++) {
             key.forEach(function (value) {
                 currKey.push(value);
+                basic.showNumber(value);
             })
         }
 
@@ -278,7 +279,6 @@ namespace abcNotation {
                 }
             }
             if (currAccidental != null) currKey[currNoteNumber] = currAccidental;
-            basic.showNumber(currKey[currNoteNumber]);
             noteNumber = currNoteNumber + currKey[currNoteNumber];
             let beatString = currNote.substr(beatPos, currNote.length);
             //            if (beatString.indexOf("/")) {
