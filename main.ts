@@ -139,21 +139,21 @@ namespace abcNotation {
     //% blockId=set_major_key block="set major key (K:) %setKey"
     export function setMajorKey(setKey: KeyNameMajor): void {
         switch (setKey) {
-            case 1: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            case 2: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case 3: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case 4: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case 5: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case 6: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
-            case 7: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
-            case 8: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
-            case 9: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
-            case 10: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
-            case 11: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case 12: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
+            case 1: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; break;
+            case 2: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]; break;
+            case 3: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]; break;
+            case 4: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0]; break;
+            case 5: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0]; break;
+            case 6: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0]; break;
+            case 7: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0]; break;
+            case 8: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]; break;
+            case 9: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]; break;
+            case 10: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1]; break;
+            case 11: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1]; break;
+            case 12: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1]; break;
+            case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1]; break;
+            case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1]; break;
+            case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1]; break;
         }
     }
 
@@ -163,21 +163,21 @@ namespace abcNotation {
     //% blockId=set_minor_key block="set minor key (K:) %setKey"
     export function setMinorKey(setKey: KeyNameMinor): void {
         switch (setKey) {
-            case 1: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            case 2: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case 3: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case 4: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case 5: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case 6: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
-            case 7: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
-            case 8: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
-            case 9: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
-            case 10: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
-            case 11: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case 12: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
+            case 1: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; break;
+            case 2: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]; break;
+            case 3: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]; break;
+            case 4: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0]; break;
+            case 5: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0]; break;
+            case 6: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0]; break;
+            case 7: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0]; break;
+            case 8: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]; break;
+            case 9: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1]; break;
+            case 10: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1]; break;
+            case 11: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1]; break;
+            case 12: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1]; break;
+            case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1]; break;
+            case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1]; break;
+            case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1]; break;
         }
     }
 
@@ -193,13 +193,6 @@ namespace abcNotation {
         let scoreArray: string[][] = null;
         let measureOrder: number[] = null;
         let currMeasure: string[] = [];
-
-        //test key
-        key.forEach(function (value: number, index: number) {
-            basic.showNumber(value);
-            basic.clearScreen();
-        })
-
 
         if (scoreArray != null) {
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
@@ -290,8 +283,7 @@ namespace abcNotation {
             duration = 300;
             // play sound of note
             frequency = freqTable[noteNumber];
-            //pins.analogPitch(frequency, duration);
-            //           basic.showNumber(duration);
+            pins.analogPitch(frequency, duration);
             // reset note
 
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
