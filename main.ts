@@ -154,7 +154,6 @@ namespace abcNotation {
             case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
             case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
             case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
-            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
     }
 
@@ -179,7 +178,6 @@ namespace abcNotation {
             case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
             case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
             case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
-            default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
     }
 
@@ -245,6 +243,7 @@ namespace abcNotation {
         }
 
         //test
+        basic.showNumber(key.length);
         key.forEach(function (value: number) {
             basic.showNumber(value);
             basic.showIcon(IconNames.Heart);
