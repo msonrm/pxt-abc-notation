@@ -47,35 +47,35 @@ enum KeyNameMajor {
 }
 
 enum KeyNameMinor {
-    Am = 16,
+    Am = 1,
     //% block="Em"
-    Em = 17,
+    Em = 2,
     //% block="Bm"
-    Bm = 18,
+    Bm = 3,
     //% block="F#m"
-    FSharpM = 19,
+    FSharpM = 4,
     //% block="C#m"
-    CSharpM = 20,
+    CSharpM = 5,
     //% block="G#m"
-    GSharpM = 21,
+    GSharpM = 6,
     //% block="D#m"
-    DSharpM = 22,
+    DSharpM = 7,
     //% block="A#m"
-    ASharpM = 23,
+    ASharpM = 8,
     //% block="Dm"
-    Dm = 24,
+    Dm = 9,
     //% block="Gm"
-    Gm = 25,
+    Gm = 10,
     //% block="Cm"
-    Cm = 26,
+    Cm = 11,
     //% block="Fm"
-    Fm = 27,
+    Fm = 12,
     //% block="Bbm"
-    BFlatM = 28,
+    BFlatM = 13,
     //% block="Ebm"
-    EFlatM = 29,
+    EFlatM = 14,
     //% block="Abm"
-    AFlatM = 30
+    AFlatM = 15
 }
 
 enum MelodyEvent {
@@ -137,23 +137,23 @@ namespace abcNotation {
      * Sets the major key.
      */
     //% blockId=set_major_key block="set major key (K:) %setKey"
-    export function setMajorKey(setKey?: KeyNameMajor): void {
+    export function setMajorKey(setKey: KeyNameMajor): void {
         switch (setKey) {
-            case KeyNameMajor.C: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            case KeyNameMajor.G: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case KeyNameMajor.D: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case KeyNameMajor.A: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case KeyNameMajor.E: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case KeyNameMajor.B: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
-            case KeyNameMajor.FSharp: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
-            case KeyNameMajor.CSharp: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
-            case KeyNameMajor.F: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
-            case KeyNameMajor.BFlat: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
-            case KeyNameMajor.EFlat: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case KeyNameMajor.AFlat: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case KeyNameMajor.DFlat: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case KeyNameMajor.GFlat: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case KeyNameMajor.CFlat: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
+            case 1: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case 2: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case 3: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case 4: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case 5: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case 6: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
+            case 7: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
+            case 8: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
+            case 9: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
+            case 10: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
+            case 11: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case 12: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
             default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
     }
@@ -164,21 +164,21 @@ namespace abcNotation {
     //% blockId=set_minor_key block="set minor key (K:) %setKey"
     export function setMinorKey(setKey?: KeyNameMinor): void {
         switch (setKey) {
-            case KeyNameMinor.Am: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            case KeyNameMinor.Em: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case KeyNameMinor.Bm: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-            case KeyNameMinor.FSharpM: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case KeyNameMinor.CSharpM: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
-            case KeyNameMinor.GSharpM: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
-            case KeyNameMinor.DSharpM: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
-            case KeyNameMinor.ASharpM: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
-            case KeyNameMinor.Dm: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
-            case KeyNameMinor.Gm: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
-            case KeyNameMinor.Cm: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case KeyNameMinor.Fm: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
-            case KeyNameMinor.BFlatM: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case KeyNameMinor.EFlatM: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
-            case KeyNameMinor.AFlatM: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
+            case 1: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            case 2: key = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case 3: key = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+            case 4: key = [1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case 5: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+            case 6: key = [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0];
+            case 7: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0];
+            case 8: key = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1];
+            case 9: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1];
+            case 10: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1];
+            case 11: key = [0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case 12: key = [0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1];
+            case 13: key = [0, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case 14: key = [-1, 0, -1, 0, -1, 0, 0, -1, 0, -1, 0, -1];
+            case 15: key = [-1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1];
             default: key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
     }
@@ -239,11 +239,15 @@ namespace abcNotation {
 
         //set current key from key(6 octaves) & rest
         for (let i = 0; i < 6; i++) {
-            key.forEach(function (value) {
+            key.forEach(function (value: number) {
                 currKey.push(value);
-                basic.showNumber(value);
             })
         }
+
+//test
+key.forEach(function (value: number) {
+    basic.showNumber(value);
+})
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
