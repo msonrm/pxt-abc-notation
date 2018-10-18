@@ -194,6 +194,13 @@ namespace abcNotation {
         let measureOrder: number[] = null;
         let currMeasure: string[] = [];
 
+        //test key
+        key.forEach(function (value: number, index: number) {
+            basic.showNumber(value);
+            basic.clearScreen();
+        })
+
+
         if (scoreArray != null) {
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             scoreArray = scoreToScoreArray(score);
@@ -203,11 +210,9 @@ namespace abcNotation {
             scoreArray = scoreToScoreArray(score);
             measureOrder = scoreToMeasureOrder(score);
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
-            let measureToPlay: number;
-            for (let melodyIndex = 0; melodyIndex < measureOrder.length; melodyIndex++) {
-                measureToPlay = measureOrder[melodyIndex];
-                playMeasure(scoreArray[measureToPlay]);
-            }
+            measureOrder.forEach(function (value) {
+                playMeasure(scoreArray[value])
+            })
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             scoreArray = null;
         }
@@ -237,17 +242,10 @@ namespace abcNotation {
 
         //set current key from key(6 octaves) & rest
         for (let i = 0; i < 6; i++) {
-            key.forEach(function (value: number) {
+            key.forEach(function (value) {
                 currKey.push(value);
             })
         }
-
-        //test
-        basic.showNumber(currKey.length);
-//        key.forEach(function (value: number) {
-//            basic.showNumber(value);
-//            basic.showIcon(IconNames.Heart);
-//        })
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
