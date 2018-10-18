@@ -243,11 +243,11 @@ namespace abcNotation {
         }
 
         //test
-        basic.showNumber(key.length);
-        key.forEach(function (value: number) {
-            basic.showNumber(value);
-            basic.showIcon(IconNames.Heart);
-        })
+        basic.showNumber(currKey.length);
+//        key.forEach(function (value: number) {
+//            basic.showNumber(value);
+//            basic.showIcon(IconNames.Heart);
+//        })
 
         for (currNotePos = 0; currNotePos < currMeasure.length; currNotePos++) {
             currNote = currMeasure[currNotePos];
