@@ -93,7 +93,7 @@ namespace abcNotation {
     let unitNote: number = 1 / 8;
     let beatNote: number = 1 / 4;
     let bpm: number = 120;
-    let unitNoteMs = 62.5;
+    let unitNoteMs = 250;
     let key: number[] = [];
     let freqTable: number[] = [];
     const MICROBIT_MELODY_ID = 2000;
@@ -118,6 +118,7 @@ namespace abcNotation {
 
     /**
      * Sets the unit note length.
+     * @param value The unit note length, eg: NoteFraction.Eighth
      */
     //% blockId=set_unit_note block="set unit note(L:) %value"
     export function setUnitNote(value: NoteFraction): void {
@@ -127,10 +128,13 @@ namespace abcNotation {
 
     /**
      * Sets the tempo.
+     * @param beatNote The beat note, eg: NoteFraction.Quarter
+     * @param bpm The tempo in beats per minute, eg: 120
      */
     //% blockId=set_tempo block="set tempo(Q:) %beatNote = %bpm"
     export function setTempo(beatNote: NoteFraction, bpm: number): void {
-        unitNoteMs = (60000 / bpm) * (unitNote / beatNote);
+        init();
+        unitNoteMs = (60000 / bpm) * (unitNote * beatNote);
     }
 
     /**
