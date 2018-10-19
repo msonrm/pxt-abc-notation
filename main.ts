@@ -273,19 +273,22 @@ namespace abcNotation {
                     default: if (beatPos == 0) beatPos = pos;
                 }
             }
+            //calculate frequency
             if (currAccidental != null) currKey[currNoteNumber] = currAccidental;
             noteNumber = currNoteNumber + currKey[currNoteNumber];
-            let beatString = currNote.substr(beatPos, currNote.length);
-            //            if (beatString.indexOf("/")) {
-            //write function for decode beatString to duration.    
-            //               duration = 100;
-            //            }
-            duration = 300;
-            // play sound of note
             frequency = freqTable[noteNumber];
+            //calculate duration
+            if (beatPos == 0) {
+                duration = unitNoteMs;
+            } else {
+                let beatString: string = currNote.substr(beatPos)
+                // beatString assuming as number
+                duration = unitNoteMs * parseInt(beatString);
+            }
+            // play sound of note
             pins.analogPitch(frequency, duration);
             // reset note
-
+            beatPos = 0;
             if (!isrest) control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.NotePlayed);
         }
     }
