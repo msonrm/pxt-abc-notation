@@ -217,13 +217,14 @@ namespace abcNotation {
 
     function scoreToScoreArray(score: string): string[][] {
         // return dummy
-        //        return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["C1", "D2"]];
-        return [["A2", "D", "E", "F", "G"], ["A2", "D2", "D2"], ["B2", "G", "A", "B", "c"], ["d2", "D2", "D2"]]
+        // return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["C1", "D2"]];
+        //return [["A2", "D", "E", "F", "G"], ["A2", "D2", "D2"], ["B2", "G", "A", "B", "c"], ["d2", "D2", "D2"]]
+        return [["c4", "e4"], ["g4", "a4"], ["=B4", "z2", "g2"], ["^f4", "=f4"], ["=e4", "_e4"], ["e2", "d2", "_d2", "c2"], ["=B2", "=A", "G", "c2", "f2"], ["e4", "d4"], ["c2"]];
     }
 
     function scoreToMeasureOrder(score: string): number[] {
         // return dummy
-        return [0, 1, 2, 3];
+        return [0, 1, 2, 3, 4, 5, 6, 7, 8];
     }
 
     function playMeasure(currMeasure: string[]): void {
