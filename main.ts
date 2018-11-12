@@ -229,7 +229,7 @@ namespace abcNotation {
         for (let currMPos = 0; currMPos < score.length; currMPos++) {
             let scoreChar = score.charAt(currMPos);
             if (scoreChar == "|") {  // TODO: parse various bar types.  
-                preScoreArray[preScoreArray.length] = score.substr(posMStart, currMPos - posMStart);
+                preScoreArray.push(score.substr(posMStart, currMPos - posMStart));
                 posMStart = currMPos + 1;
             }
         }
@@ -245,7 +245,7 @@ namespace abcNotation {
                         break; // do nothing
                     case "^": case "_": case "=":
                         if (isNote) {
-                            measureArray[measureArray.length] = measureString.substr(posNStart, currNPos - posNStart - 1);
+                            measureArray.push(measureString.substr(posNStart, currNPos - posNStart - 1));
                             posNStart = currNPos;
                             isNote = false;
                         }
@@ -257,7 +257,7 @@ namespace abcNotation {
                         break;
                 }
             }
-            scoreArray[scoreArray.length] = measureArray;
+            scoreArray.push(measureArray);
         }
         return scoreArray;
     }
