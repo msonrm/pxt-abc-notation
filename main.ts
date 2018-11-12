@@ -107,14 +107,16 @@ namespace abcNotation {
         if (freqTable.length == 0) freqTable = [0, 65, 69, 73, 78, 82, 87, 92, 98, 104, 110, 117, 123, 131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494, 523, 554, 587, 622, 659, 698, 740, 784, 831, 880, 932, 988, 1047, 1109, 1175, 1245, 1319, 1397, 1480, 1568, 1661, 1760, 1865, 1976, 2093, 2217, 2349, 2489, 2637, 2794, 2960, 3136, 3322, 3520, 3729, 3951]
     }
 
+
     /**
      * Registers code to run on various melody events
     */
     //% blockId=music_on_event block="melody on %value"
     //% weight=59
-    export function onEvent(value: MelodyEvent, handler: () => void) {
-        control.onEvent(MICROBIT_MELODY_ID, value, handler);
-    }
+    //    export function onEvent(value: MelodyEvent, handler: () => void) {
+    //        control.onEvent(MICROBIT_MELODY_ID, value, handler);
+    //    }
+
 
     /**
      * Sets the unit note length.
@@ -198,10 +200,11 @@ namespace abcNotation {
         let measureOrder: number[] = null;
         let currMeasure: string[] = [];
 
+        // I can not understand those.
         if (scoreArray != null) {
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyEnded);
             scoreArray = scoreToScoreArray(score);
-            measureOrder = scoreToMeasureOrder(score)
+            measureOrder = scoreToMeasureOrder(score);
             control.raiseEvent(MICROBIT_MELODY_ID, MelodyEvent.MelodyStarted);
         } else {
             scoreArray = scoreToScoreArray(score);
@@ -215,16 +218,54 @@ namespace abcNotation {
         }
     }
 
+    // function: score(string) => scoreArray(array of array);
+    // scoreArray = [ [note, note, note, note], [note, note, note, note], [note, note, note, note], and so on...]
+    // 
     function scoreToScoreArray(score: string): string[][] {
-        // return dummy
-        // return [["C2", "D2", "E1", "F4", "G2", "A2", "B1", "z2"], ["C1", "D2"]];
-        //return [["A2", "D", "E", "F", "G"], ["A2", "D2", "D2"], ["B2", "G", "A", "B", "c"], ["d2", "D2", "D2"]]
-        return [["c4", "e4"], ["g4", "a4"], ["=B4", "z2", "g2"], ["^f4", "=f4"], ["=e4", "_e4"], ["e2", "d2", "_d2", "c2"], ["=B2", "=A", "G", "c2", "f2"], ["e4", "d4"], ["c2"]];
+        // first, score(string) => preScoreArray(array) divided by "|" (at this point)
+        let scoreArray: string[][] = [[]];
+        let preScoreArray: string[] = [];
+        let posMStart: number = 0;
+        for (let currMPos = 0; currMPos < score.length; currMPos++) {
+            let scoreChar = score.charAt(currMPos);
+            if (scoreChar == "|") {  // TODO: parse various bar types.  
+                preScoreArray[preScoreArray.length] = score.substr(posMStart, currMPos - posMStart);
+                posMStart = currMPos + 1;
+            }
+        }
+        for (let mi = 0; mi < preScoreArray.length; mi++) {
+            let measureString = preScoreArray[mi];
+            let measureArray: string[] = [];
+            let isNote: boolean = false;
+            let posNStart: number = 0;
+            for (let currNPos = 0; currNPos < measureString.length; currNPos++) {
+                let mNoteChar = measureString.charAt(currNPos);
+                switch (mNoteChar) {
+                    case " ":
+                        break; // do nothing
+                    case "^": case "_": case "=":
+                        if (isNote) {
+                            measureArray[measureArray.length] = measureString.substr(posNStart, currNPos - posNStart - 1);
+                            posNStart = currNPos;
+                            isNote = false;
+                        }
+                        break;
+                    case "C": case "D": case "E": case "F": case "G": case "A": case "B":
+                    case "c": case "d": case "e": case "f": case "g": case "a": case "b":
+                    case "z": case "Z":
+                        isNote = true;
+                        break;
+                }
+            }
+            scoreArray[scoreArray.length] = measureArray;
+        }
+        return scoreArray;
     }
 
+    // function: score(string) => measureOrder(array)
     function scoreToMeasureOrder(score: string): number[] {
-        // return dummy
-        return [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        // return dummy (only first 8 measures)
+        return [0, 1, 2, 3, 4, 5, 6, 7];
     }
 
     function playMeasure(currMeasure: string[]): void {
